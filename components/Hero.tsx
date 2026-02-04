@@ -9,7 +9,7 @@ export default function Hero() {
         <FloatingParticles />
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* Left Content */}
           <div className="space-y-8">
             <div className="inline-flex items-center px-4 py-2 bg-white/20 rounded-full text-primary-700 text-sm font-medium">
