@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { ShoppingBag, Search, Menu, X, Heart, User } from 'lucide-react'
 
 export default function Header() {
@@ -12,14 +13,16 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-primary-600">Bella Beauty</h1>
+            <Link href="/">
+              <h1 className="text-2xl font-bold text-primary-600 cursor-pointer hover:text-primary-700 transition-colors">Bella Beauty</h1>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">Home</a>
-            <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">Shop</a>
-            <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">Categories</a>
+            <Link href="/" className="text-gray-700 hover:text-primary-600 transition-colors">Home</Link>
+            <Link href="/" className="text-gray-700 hover:text-primary-600 transition-colors">Shop</Link>
+            <Link href="/categories" className="text-gray-700 hover:text-primary-600 transition-colors">Categories</Link>
             <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">About</a>
             <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
           </nav>
@@ -60,7 +63,7 @@ export default function Header() {
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Home</a>
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Shop</a>
-              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Categories</a>
+              <Link href="/categories" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Categories</Link>
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">About</a>
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
             </div>

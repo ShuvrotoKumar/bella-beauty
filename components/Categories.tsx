@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import RotatingCube from './animations/RotatingCube'
 
 const categories = [
@@ -46,8 +47,9 @@ export default function Categories() {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category, index) => (
-            <div
+            <Link
               key={index}
+              href={`/categories?category=${encodeURIComponent(category.name)}`}
               className="group cursor-pointer bg-gray-50 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
             >
               <div className="relative h-64 overflow-hidden">
@@ -71,7 +73,7 @@ export default function Categories() {
                   {category.description}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
