@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import CursorParticles from '@/components/CursorParticles'
 
 export const metadata: Metadata = {
   title: 'Bella Beauty - Premium Cosmetics',
@@ -13,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CursorParticles />
+        {children}
+      </body>
     </html>
   )
 }
