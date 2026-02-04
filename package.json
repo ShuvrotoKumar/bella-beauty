@@ -15,7 +15,8 @@
     "react-dom": "^18",
     "three": "^r128",
     "@react-three/fiber": "^8.14.0",
-    "@react-three/drei": "^9.88.0"
+    "@react-three/drei": "^9.88.0",
+    "lottie-react": "^2.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Mail, Gift } from 'lucide-react'
+import PulsingGrid from './animations/PulsingGrid'
 
 export default function Newsletter() {
   const [email, setEmail] = useState('')
@@ -16,8 +17,11 @@ export default function Newsletter() {
   }
 
   return (
-    <section className="py-20 gradient-bg">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className="py-20 gradient-bg relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <PulsingGrid />
+      </div>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div className="bg-white/10 backdrop-blur-md rounded-3xl p-12 border border-white/20">
           <div className="flex justify-center mb-6">
             <div className="bg-primary-100 p-4 rounded-full">

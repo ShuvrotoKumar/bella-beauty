@@ -1,15 +1,18 @@
 import { ArrowRight, Sparkles } from 'lucide-react'
 import Image from 'next/image'
-import FloatingParticles from './animations/FloatingParticles'
 
 export default function Hero() {
   return (
     <section className="pt-16 gradient-bg min-h-screen flex items-center relative overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <FloatingParticles />
+      {/* Animated Background Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center relative z-10">
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-8">
             <div className="inline-flex items-center px-4 py-2 bg-white/20 rounded-full text-primary-700 text-sm font-medium">
