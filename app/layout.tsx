@@ -1,10 +1,25 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import CursorParticles from '@/components/CursorParticles'
+import dynamic from 'next/dynamic'
+
+const PerformanceMonitor = dynamic(() => import('@/components/PerformanceMonitor'), {
+  ssr: false,
+})
+
+const CursorParticles = dynamic(() => import('@/components/CursorParticles'), {
+  ssr: false,
+})
 
 export const metadata: Metadata = {
   title: 'Bella Beauty - Premium Cosmetics',
   description: 'Discover premium cosmetics and beauty products for the modern woman',
+  keywords: 'cosmetics, beauty, makeup, skincare, premium',
+  authors: [{ name: 'Bella Beauty' }],
+  openGraph: {
+    title: 'Bella Beauty - Premium Cosmetics',
+    description: 'Discover premium cosmetics and beauty products for the modern woman',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({
@@ -14,9 +29,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="theme-color" content="#ec4899" />
+      </head>
+      <body className="antialiased">
+        <div id="root">
+          {children}
+        </div>
         <CursorParticles />
-        {children}
+        <PerformanceMonitor />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   )

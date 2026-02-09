@@ -1,9 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function WaveAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [isVisible, setIsVisible] = useState(true)
+  const animationRef = useRef<number>()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -18,6 +20,11 @@ export default function WaveAnimation() {
     let time = 0
 
     const animate = () => {
+      if (!isVisible) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       ctx.strokeStyle = 'rgba(236, 72, 153, 0.6)'
@@ -25,7 +32,7 @@ export default function WaveAnimation() {
 
       for (let i = 0; i < 3; i++) {
         ctx.beginPath()
-        for (let x = 0; x < canvas.width; x += 5) {
+        for (let x = 0; x < canvas.width; x += 10) {
           const y = canvas.height / 2 + Math.sin((x + time) * 0.01 + i) * 30
           if (x === 0) {
             ctx.moveTo(x, y)
@@ -37,7 +44,7 @@ export default function WaveAnimation() {
       }
 
       time += 2
-      requestAnimationFrame(animate)
+      animationRef.current = requestAnimationFrame(animate)
     }
 
     animate()
@@ -47,9 +54,25 @@ export default function WaveAnimation() {
       canvas.height = canvas.offsetHeight
     }
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting)
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(canvas)
+
     window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      observer.disconnect()
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [isVisible])
 
   return (
     <canvas

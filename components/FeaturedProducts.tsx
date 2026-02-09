@@ -1,6 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import { Star, Heart, ShoppingCart } from 'lucide-react'
-import WaveAnimation from './animations/WaveAnimation'
+import { memo } from 'react'
 
 const products = [
   {
@@ -45,13 +47,97 @@ const products = [
   }
 ]
 
+const ProductCard = memo(({ product }: { product: typeof products[0] }) => {
+  const renderStars = () => {
+    const stars = []
+    const fullStars = Math.floor(product.rating)
+    
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <Star
+          key={i}
+          size={16}
+          className={
+            i < fullStars
+              ? 'text-yellow-400 fill-current'
+              : 'text-gray-300'
+          }
+        />
+      )
+    }
+    return stars
+  }
+
+  return (
+    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+      <div className="relative">
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={400}
+          height={300}
+          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          quality={70}
+        />
+        
+        <div className="absolute top-4 left-4">
+          <span className="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+            {product.badge}
+          </span>
+        </div>
+        
+        <button className="absolute top-4 right-4 p-2 bg-white/90 rounded-full hover:bg-white transition-colors">
+          <Heart size={18} className="text-gray-600 hover:text-primary-600" />
+        </button>
+        
+        <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button className="w-full bg-primary-600 text-white py-2 rounded-full font-medium hover:bg-primary-700 transition-colors flex items-center justify-center">
+            <ShoppingCart size={18} className="mr-2" />
+            Quick Add
+          </button>
+        </div>
+      </div>
+      
+      <div className="p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          {product.name}
+        </h3>
+        
+        <div className="flex items-center mb-3">
+          <div className="flex items-center">
+            {renderStars()}
+          </div>
+          <span className="text-sm text-gray-600 ml-2">
+            {product.rating} ({product.reviews})
+          </span>
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <span className="text-xl font-bold text-gray-900">
+              ${product.price}
+            </span>
+            <span className="text-sm text-gray-500 line-through">
+              ${product.originalPrice}
+            </span>
+          </div>
+          <div className="text-sm text-green-600 font-medium">
+            Save ${product.originalPrice - product.price}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+})
+
+ProductCard.displayName = 'ProductCard'
+
 export default function FeaturedProducts() {
   return (
-    <section className="py-20 bg-gray-50 relative overflow-hidden">
-      <div className="absolute inset-0 z-0 h-64">
-        <WaveAnimation />
-      </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Featured Products
@@ -63,81 +149,7 @@ export default function FeaturedProducts() {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group"
-            >
-              <div className="relative">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  width={400}
-                  height={300}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                
-                {/* Badge */}
-                <div className="absolute top-4 left-4">
-                  <span className="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {product.badge}
-                  </span>
-                </div>
-                
-                {/* Wishlist Button */}
-                <button className="absolute top-4 right-4 p-2 bg-white/90 rounded-full hover:bg-white transition-colors">
-                  <Heart size={18} className="text-gray-600 hover:text-primary-600" />
-                </button>
-                
-                {/* Quick Add to Cart */}
-                <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button className="w-full bg-primary-600 text-white py-2 rounded-full font-medium hover:bg-primary-700 transition-colors flex items-center justify-center">
-                    <ShoppingCart size={18} className="mr-2" />
-                    Quick Add
-                  </button>
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {product.name}
-                </h3>
-                
-                {/* Rating */}
-                <div className="flex items-center mb-3">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={16}
-                        className={`${
-                          i < Math.floor(product.rating)
-                            ? 'text-yellow-400 fill-current'
-                            : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-sm text-gray-600 ml-2">
-                    {product.rating} ({product.reviews})
-                  </span>
-                </div>
-                
-                {/* Price */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xl font-bold text-gray-900">
-                      ${product.price}
-                    </span>
-                    <span className="text-sm text-gray-500 line-through">
-                      ${product.originalPrice}
-                    </span>
-                  </div>
-                  <div className="text-sm text-green-600 font-medium">
-                    Save ${product.originalPrice - product.price}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
         

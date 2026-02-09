@@ -1,122 +1,72 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import Image from 'next/image'
-import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
 
 export default function Hero() {
   const rootRef = useRef<HTMLElement | null>(null)
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+  useEffect(() => {
+    // Only load GSAP on desktop and when user interacts
+    if (window.innerWidth > 768) {
+      import('gsap').then((gsapModule) => {
+        const gsap = gsapModule.default
+        
+        // Direct GSAP usage without useGSAP hook to avoid hook rules violation
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
-      tl.fromTo(
-        '[data-hero="badge"]',
-        { autoAlpha: 0, y: 14, filter: 'blur(6px)' },
-        { autoAlpha: 1, y: 0, duration: 0.7, filter: 'blur(0px)' }
-      )
-        .fromTo(
-          '[data-hero="title"]',
-          { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
-          { autoAlpha: 1, y: 0, duration: 0.8, filter: 'blur(0px)' },
-          '-=0.35'
-        )
-        .fromTo(
-          '[data-hero="desc"]',
+        tl.fromTo(
+          '[data-hero="badge"]',
           { autoAlpha: 0, y: 14 },
-          { autoAlpha: 1, y: 0, duration: 0.65 },
-          '-=0.45'
+          { autoAlpha: 1, y: 0, duration: 0.7 }
         )
-        .fromTo(
-          '[data-hero="actions"] > *',
-          { autoAlpha: 0, y: 14, scale: 0.98 },
-          { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12 },
-          '-=0.35'
-        )
-        .fromTo(
-          '[data-hero="stats"] > *',
-          { autoAlpha: 0, y: 10 },
-          { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.1 },
-          '-=0.25'
-        )
-        .fromTo(
-          '[data-hero="image"]',
-          { autoAlpha: 0, y: 18, scale: 0.98 },
-          { autoAlpha: 1, y: 0, scale: 1, duration: 0.9 },
-          '-=0.9'
-        )
+          .fromTo(
+            '[data-hero="title"]',
+            { autoAlpha: 0, y: 18 },
+            { autoAlpha: 1, y: 0, duration: 0.8 },
+            '-=0.35'
+          )
+          .fromTo(
+            '[data-hero="desc"]',
+            { autoAlpha: 0, y: 14 },
+            { autoAlpha: 1, y: 0, duration: 0.65 },
+            '-=0.45'
+          )
+          .fromTo(
+            '[data-hero="actions"] > *',
+            { autoAlpha: 0, y: 14, scale: 0.98 },
+            { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12 },
+            '-=0.35'
+          )
+          .fromTo(
+            '[data-hero="image"]',
+            { autoAlpha: 0, y: 18, scale: 0.98 },
+            { autoAlpha: 1, y: 0, scale: 1, duration: 0.9 },
+            '-=0.9'
+          )
 
-      gsap.to('[data-hero="image"]', {
-        y: -10,
-        duration: 3.2,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
+        // Minimal continuous animation
+        gsap.to('[data-hero="image"]', {
+          y: -5,
+          duration: 4,
+          ease: 'sine.inOut',
+          yoyo: true,
+          repeat: -1,
+        })
+      }).catch(error => {
+        console.warn('GSAP loading failed:', error)
       })
-
-      gsap.to('[data-hero="float-1"]', {
-        x: -6,
-        y: -14,
-        duration: 3.8,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-      gsap.to('[data-hero="float-2"]', {
-        x: 10,
-        y: 12,
-        duration: 4.4,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-      gsap.to('[data-hero="float-3"]', {
-        x: -10,
-        y: 6,
-        duration: 4.1,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-
-      gsap.to('[data-hero="blob-1"]', {
-        x: 18,
-        y: -12,
-        duration: 10,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-      gsap.to('[data-hero="blob-2"]', {
-        x: -16,
-        y: 10,
-        duration: 11,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-      gsap.to('[data-hero="blob-3"]', {
-        x: 14,
-        y: 16,
-        duration: 12,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      })
-    },
-    { scope: rootRef }
-  )
+    }
+  }, [])
 
   return (
     <section ref={rootRef} className="pt-16 gradient-bg min-h-screen flex items-center relative overflow-hidden">
-      {/* Animated Background Particles */}
+      {/* Simplified Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div data-hero="blob-1" className="absolute top-20 left-10 w-72 h-72 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div data-hero="blob-2" className="absolute top-40 right-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div data-hero="blob-3" className="absolute -bottom-8 left-20 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -147,7 +97,7 @@ export default function Hero() {
               </button>
             </div>
             
-            <div data-hero="stats" className="flex items-center space-x-8 pt-8">
+            <div className="flex items-center space-x-8 pt-8">
               <div className="text-center">
                 <div className="text-3xl font-bold text-gray-900">50K+</div>
                 <div className="text-gray-600">Happy Customers</div>
@@ -172,13 +122,17 @@ export default function Hero() {
                 width={600}
                 height={700}
                 className="rounded-3xl shadow-2xl"
+                loading="eager"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={75}
+                priority
               />
             </div>
             
-            {/* Floating Elements */}
-            <div data-hero="float-1" className="absolute -top-4 -left-4 w-20 h-20 bg-primary-200 rounded-full opacity-60 animate-pulse"></div>
-            <div data-hero="float-2" className="absolute -bottom-8 -right-8 w-32 h-32 bg-primary-100 rounded-full opacity-40 animate-pulse delay-1000"></div>
-            <div data-hero="float-3" className="absolute top-1/2 -right-12 w-16 h-16 bg-primary-300 rounded-full opacity-50 animate-pulse delay-500"></div>
+            {/* Simplified Floating Elements */}
+            <div className="absolute -top-4 -left-4 w-20 h-20 bg-primary-200 rounded-full opacity-60"></div>
+            <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-primary-100 rounded-full opacity-40"></div>
+            <div className="absolute top-1/2 -right-12 w-16 h-16 bg-primary-300 rounded-full opacity-50"></div>
           </div>
         </div>
       </div>
