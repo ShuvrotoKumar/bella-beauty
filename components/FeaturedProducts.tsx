@@ -12,7 +12,7 @@ const products = [
     originalPrice: 60,
     rating: 4.8,
     reviews: 124,
-    image: 'https://images.unsplash.com/photo-1631214540242-3cd2c4d5e5a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1631214540242-3cd2c4d5e5a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=75',
     badge: 'Bestseller'
   },
   {
@@ -22,7 +22,7 @@ const products = [
     originalPrice: 120,
     rating: 4.9,
     reviews: 89,
-    image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=75',
     badge: 'Limited Edition'
   },
   {
@@ -32,7 +32,7 @@ const products = [
     originalPrice: 85,
     rating: 4.7,
     reviews: 156,
-    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=75',
     badge: 'New'
   },
   {
@@ -42,7 +42,7 @@ const products = [
     originalPrice: 180,
     rating: 4.9,
     reviews: 203,
-    image: 'https://images.unsplash.com/photo-1583241800698-9c2e8b2b3b8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1583241800698-9c2e8b2b3b8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=75',
     badge: 'Pro Choice'
   }
 ]

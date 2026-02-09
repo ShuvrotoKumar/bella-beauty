@@ -2,10 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import dynamic from 'next/dynamic'
 
-const PerformanceMonitor = dynamic(() => import('@/components/PerformanceMonitor'), {
-  ssr: false,
-})
-
 const CursorParticles = dynamic(() => import('@/components/CursorParticles'), {
   ssr: false,
 })
@@ -40,7 +36,6 @@ export default function RootLayout({
           {children}
         </div>
         <CursorParticles />
-        <PerformanceMonitor />
         <script
           dangerouslySetInnerHTML={{
             __html: `

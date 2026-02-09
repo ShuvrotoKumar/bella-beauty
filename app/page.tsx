@@ -1,22 +1,24 @@
-import dynamic from 'next/dynamic'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Categories from '@/components/Categories'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 
+// Only lazy load components that are below the fold
 const FeaturedProducts = dynamic(() => import('@/components/FeaturedProducts'), {
-  loading: () => <div className="py-20 bg-gray-50"><div className="max-w-7xl mx-auto px-4 text-center">Loading featured products...</div></div>,
+  loading: () => <div className="py-20 bg-gray-50 animate-pulse"></div>,
 })
 
 const Testimonials = dynamic(() => import('@/components/Testimonials'), {
-  loading: () => <div className="py-20"><div className="max-w-7xl mx-auto px-4 text-center">Loading testimonials...</div></div>,
+  loading: () => <div className="py-20 bg-white animate-pulse"></div>,
 })
 
 const Newsletter = dynamic(() => import('@/components/Newsletter'), {
-  loading: () => <div className="py-16 bg-gray-50"><div className="max-w-7xl mx-auto px-4 text-center">Loading newsletter...</div></div>,
+  loading: () => <div className="py-20 bg-gray-50 animate-pulse"></div>,
 })
 
 const Footer = dynamic(() => import('@/components/Footer'), {
-  loading: () => <div className="bg-gray-900 text-white py-12"><div className="max-w-7xl mx-auto px-4 text-center">Loading footer...</div></div>,
+  loading: () => <div className="bg-gray-900 h-64 animate-pulse"></div>,
 })
 
 export default function Home() {
@@ -25,10 +27,18 @@ export default function Home() {
       <Header />
       <Hero />
       <Categories />
-      <FeaturedProducts />
-      <Testimonials />
-      <Newsletter />
-      <Footer />
+      <Suspense fallback={<div className="py-20 bg-gray-50 animate-pulse"></div>}>
+        <FeaturedProducts />
+      </Suspense>
+      <Suspense fallback={<div className="py-20 bg-white animate-pulse"></div>}>
+        <Testimonials />
+      </Suspense>
+      <Suspense fallback={<div className="py-20 bg-gray-50 animate-pulse"></div>}>
+        <Newsletter />
+      </Suspense>
+      <Suspense fallback={<div className="bg-gray-900 h-64 animate-pulse"></div>}>
+        <Footer />
+      </Suspense>
     </main>
   )
 }
