@@ -3,17 +3,25 @@ const urlsToCache = [
   '/',
   '/_next/static/css/',
   '/_next/static/chunks/',
-  'https://images.unsplash.com/photo-1596462502278-27bfdc403348',
 ]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+      .then((cache) => {
+        // Don't cache external URLs in service worker for Vercel
+        return cache.addAll(urlsToCache.filter(url => !url.startsWith('http')))
+      })
   )
 })
 
 self.addEventListener('fetch', (event) => {
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') return
+  
+  // Skip external requests
+  if (event.request.url.startsWith('http')) return
+  
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
