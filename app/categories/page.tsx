@@ -3,9 +3,22 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
-import PulsingGrid from '../../components/animations/PulsingGrid'
+import dynamic from 'next/dynamic'
+
+// Lazy load non-critical components
+const Header = dynamic(() => import('../../components/Header'), {
+  ssr: true // Keep SSR for SEO
+})
+
+const Footer = dynamic(() => import('../../components/Footer'), {
+  ssr: true // Keep SSR for SEO
+})
+
+// Remove heavy animation component for performance
+// const PulsingGrid = dynamic(() => import('../../components/animations/PulsingGrid'), {
+//   ssr: false,
+//   loading: () => null
+// })
 
 interface Product {
   id: number
@@ -55,7 +68,7 @@ const products: Product[] = [
     name: 'Hydrating Face Serum',
     category: 'Skincare',
     price: 45.99,
-    image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.8,
     reviews: 234,
     inStock: true
@@ -65,7 +78,7 @@ const products: Product[] = [
     name: 'Liquid Foundation',
     category: 'Makeup',
     price: 38.50,
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.6,
     reviews: 189,
     inStock: true
@@ -75,7 +88,7 @@ const products: Product[] = [
     name: 'Luxury Perfume',
     category: 'Fragrance',
     price: 89.99,
-    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.9,
     reviews: 156,
     inStock: true
@@ -85,7 +98,7 @@ const products: Product[] = [
     name: 'Shampoo & Conditioner',
     category: 'Hair Care',
     price: 32.00,
-    image: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.7,
     reviews: 312,
     inStock: true
@@ -95,7 +108,7 @@ const products: Product[] = [
     name: 'Moisturizing Cream',
     category: 'Skincare',
     price: 52.99,
-    image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.5,
     reviews: 198,
     inStock: true
@@ -105,7 +118,7 @@ const products: Product[] = [
     name: 'Eyeshadow Palette',
     category: 'Makeup',
     price: 42.00,
-    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.8,
     reviews: 267,
     inStock: false
@@ -115,7 +128,7 @@ const products: Product[] = [
     name: 'Body Mist',
     category: 'Fragrance',
     price: 28.50,
-    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.4,
     reviews: 145,
     inStock: true
@@ -125,7 +138,7 @@ const products: Product[] = [
     name: 'Hair Mask Treatment',
     category: 'Hair Care',
     price: 35.99,
-    image: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    image: 'https://images.unsplash.com/photo-1559599101-f09722fb4948?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=70',
     rating: 4.7,
     reviews: 289,
     inStock: true
@@ -154,14 +167,12 @@ export default function CategoriesPage() {
     <main className="min-h-screen bg-white">
       <Header />
 
-      {/* Hero Section with Animation */}
+      {/* Hero Section */}
       <section className="relative py-20 overflow-hidden bg-gradient-to-br from-gray-50 to-white">
-        <div className="absolute inset-0 z-0 opacity-30">
-          <PulsingGrid />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Remove heavy animation for performance */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4 animate-fade-in">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">
               Explore Our Categories
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -240,21 +251,22 @@ export default function CategoriesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {filteredProducts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {filteredProducts.map((product, index) => (
+              {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="group bg-white rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
-                  style={{
-                    animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`
-                  }}
+                  className="group bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100"
                 >
                   {/* Product Image */}
                   <div className="relative h-64 overflow-hidden bg-gray-100">
                     <Image
                       src={product.image}
                       alt={product.name}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
+                      width={400}
+                      height={300}
+                      className="object-cover w-full h-full"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      quality={70}
                     />
                     {!product.inStock && (
                       <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
@@ -313,33 +325,6 @@ export default function CategoriesPage() {
           )}
         </div>
       </section>
-
-      {/* Floating Animation Background */}
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        .animate-fade-in {
-          animation: fade-in 0.8s ease-out;
-        }
-      `}</style>
 
       <Footer />
     </main>

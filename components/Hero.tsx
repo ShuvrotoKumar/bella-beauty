@@ -8,52 +8,45 @@ export default function Hero() {
   const rootRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    // Only load GSAP on desktop and when user interacts
+    // Only load GSAP on desktop and reduce animations
     if (window.innerWidth > 768) {
       import('gsap').then((gsapModule) => {
         const gsap = gsapModule.default
         
-        // Direct GSAP usage without useGSAP hook to avoid hook rules violation
+        // Simplified animations - only entrance animations, no continuous animations
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
         tl.fromTo(
           '[data-hero="badge"]',
           { autoAlpha: 0, y: 14 },
-          { autoAlpha: 1, y: 0, duration: 0.7 }
+          { autoAlpha: 1, y: 0, duration: 0.5 }
         )
           .fromTo(
             '[data-hero="title"]',
             { autoAlpha: 0, y: 18 },
-            { autoAlpha: 1, y: 0, duration: 0.8 },
-            '-=0.35'
+            { autoAlpha: 1, y: 0, duration: 0.6 },
+            '-=0.3'
           )
           .fromTo(
             '[data-hero="desc"]',
             { autoAlpha: 0, y: 14 },
-            { autoAlpha: 1, y: 0, duration: 0.65 },
-            '-=0.45'
+            { autoAlpha: 1, y: 0, duration: 0.5 },
+            '-=0.3'
           )
           .fromTo(
             '[data-hero="actions"] > *',
             { autoAlpha: 0, y: 14, scale: 0.98 },
-            { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12 },
-            '-=0.35'
+            { autoAlpha: 1, y: 0, scale: 1, duration: 0.4, stagger: 0.1 },
+            '-=0.3'
           )
           .fromTo(
             '[data-hero="image"]',
             { autoAlpha: 0, y: 18, scale: 0.98 },
-            { autoAlpha: 1, y: 0, scale: 1, duration: 0.9 },
-            '-=0.9'
+            { autoAlpha: 1, y: 0, scale: 1, duration: 0.6 },
+            '-=0.6'
           )
 
-        // Minimal continuous animation
-        gsap.to('[data-hero="image"]', {
-          y: -5,
-          duration: 4,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1,
-        })
+        // Remove continuous animations for better performance
       }).catch(error => {
         console.warn('GSAP loading failed:', error)
       })
