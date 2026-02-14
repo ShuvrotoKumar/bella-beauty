@@ -23,8 +23,8 @@ export default function Header() {
             <Link href="/" className="text-gray-700 hover:text-primary-600 transition-colors">Home</Link>
             <Link href="/shop" className="text-gray-700 hover:text-primary-600 transition-colors">Shop</Link>
             <Link href="/categories" className="text-gray-700 hover:text-primary-600 transition-colors">Categories</Link>
-            <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">About</a>
-            <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
+            <Link href="/about" className="text-gray-700 hover:text-primary-600 transition-colors">About</Link>
+            <Link href="/contact" className="text-gray-700 hover:text-primary-600 transition-colors">Contact</Link>
           </nav>
 
           {/* Desktop Icons */}
@@ -61,11 +61,11 @@ export default function Header() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
-              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Home</a>
+              <Link href="/" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Home</Link>
               <Link href="/shop" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Shop</Link>
               <Link href="/categories" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Categories</Link>
-              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">About</a>
-              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
+              <Link href="/about" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">About</Link>
+              <Link href="/contact" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Contact</Link>
             </div>
           </div>
         )}
