@@ -21,7 +21,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link href="/" className="text-gray-700 hover:text-primary-600 transition-colors">Home</Link>
-            <Link href="/" className="text-gray-700 hover:text-primary-600 transition-colors">Shop</Link>
+            <Link href="/shop" className="text-gray-700 hover:text-primary-600 transition-colors">Shop</Link>
             <Link href="/categories" className="text-gray-700 hover:text-primary-600 transition-colors">Categories</Link>
             <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">About</a>
             <a href="#" className="text-gray-700 hover:text-primary-600 transition-colors">Contact</a>
@@ -62,7 +62,7 @@ export default function Header() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Home</a>
-              <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Shop</a>
+              <Link href="/shop" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Shop</Link>
               <Link href="/categories" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Categories</Link>
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">About</a>
               <a href="#" className="block px-3 py-2 text-gray-700 hover:text-primary-600 transition-colors">Contact</a>

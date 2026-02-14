@@ -140,7 +140,7 @@ const ProductCard = ({ product }: { product: typeof allProducts[0] }) => {
   }
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+    <div className="bg-white rounded-2xl pt-4 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
       <div className="relative">
         <Image
           src={product.image}
